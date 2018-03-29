@@ -1,0 +1,23 @@
+
+
+function classinitb() {
+    var text = App.ActiveDoc.Text;
+    if (App.ActiveDoc.SelText != "") {
+        text = App.ActiveDoc.SelText;
+    }
+    try {
+	    var fname = App.ActiveDoc.PathName.match(/[^\\]*(?=\.\w+$)/)[0]
+        text = "#include \""+fname+".h\"\n\n"+fname+"::"+fname+"()\n{\n	\n}\n\n"+fname+"::"+fname+"(const "+fname+"& that)\n{\n	\n}\n\n"+fname+"::~"+fname+"()\n{\n	\n}\n\n";
+        
+    } catch (ex) {
+        ShowMsgBox(ex.message, "初始化Class", 0 | 0x10);
+        return;
+    }
+    if (App.ActiveDoc.SelText != "") {
+        App.ActiveDoc.SelText = text;
+    } else {
+        App.ActiveDoc.Text = text;
+    }
+}(function() {
+    classinitb();
+})();
